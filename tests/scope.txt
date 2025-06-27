@@ -1,0 +1,10 @@
+function inner
+    x <= 99
+    INT y <= 90; end    # переменная видна только здесь
+function main
+    INT x <= 10
+    print x
+    do inner
+    x <= x + 1      # должно быть 99 + 1 = 100
+    print x
+    print y; end # Runtime_error

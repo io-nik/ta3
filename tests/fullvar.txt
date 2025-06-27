@@ -1,0 +1,17 @@
+function main
+    INT x <= 3
+    x[1] <= 5
+    x[2] <= 7
+    INT y <= 4
+    y[1] <= 5
+    y[2] <= 6
+    print x[]
+    print y[]
+    BOOL b1 <= 5 in x[]
+    print b1          # true
+    BOOL b2 <= y[1] all in x[]
+    print b2          # true
+    BOOL b3 <= y[] some less x[]
+    print b3          # true
+    BOOL b4 <= y[] all less x[]
+    print b4; end     # false

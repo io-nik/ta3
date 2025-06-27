@@ -1,0 +1,8 @@
+function outer
+    INT x <= 5
+    function inner
+        INT y <= x + 1
+        print y; end
+    do inner; end
+function main
+    do outer; end

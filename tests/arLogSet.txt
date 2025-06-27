@@ -1,0 +1,19 @@
+function main
+    INT x <= 5
+    x[1] <= 2
+    x[2] <= 7
+    INT y <= x + 2
+    y[1] <= 3
+    y[2] <= 2
+    INT a <= x[] + y[]
+    print a
+    print a[1]
+    print a[2]
+    BOOL z <= x + y         # z = true
+    BOOL b <= x in y        # false, y — не массив
+    INT arr <= 3; arr[1] <= 5; arr[2] <= 7
+    BOOL f1 <= 5 in arr[]     # true
+    BOOL f2 <= 9 in arr[]     # false
+    BOOL f3 <= 2 less arr[]   # true
+    BOOL f4 <= arr[] all less 10  # true v-- true
+    BOOL f5 <= arr[] some in arr[]; end

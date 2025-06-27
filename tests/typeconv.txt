@@ -1,0 +1,13 @@
+function main
+    INT x <= 5
+    BOOL b <= true
+    BOOL c <= x & b     # true (5 → true) and true => true
+    INT d <= x + b        # 5 + 1 => 6
+    CELL cl1 <= 0         # 0 → CELL_UNDEF
+    BOOL is_empty <= cl1  # cl1 == UNDEF → false
+    print c               # Expected: true
+    print d               # Expected: 6
+    print is_empty        # Expected: false
+    CELL cl2 <= 1         # 1 → CELL_EMPTY
+    BOOL is_cell <= cl2   # Expected: Runtime_error
+end

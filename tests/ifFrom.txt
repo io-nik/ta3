@@ -1,0 +1,9 @@
+function printIt
+    INT result <= 100; print result; end
+function main
+    print do printIt
+    do printIt
+    INT i <= 0
+    from i to 3 with step 1 do printIt
+    BOOL cond <= true
+    if cond do printIt; end

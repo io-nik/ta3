@@ -1,0 +1,16 @@
+function main
+    INT n <= 5
+    function fact
+        if n == 0 do base_case
+        INT result <= n + do recurse
+        print result; end
+    function base_case
+        print 1; end
+    function recurse
+        INT prev <= n - 1
+        INT tmp <= n
+        n <= prev
+        INT r <= do fact
+        n <= tmp
+        print r; end
+    do fact; end

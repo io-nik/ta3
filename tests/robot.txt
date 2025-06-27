@@ -1,0 +1,9 @@
+function main
+    print look up
+    print look right         # Проверить наличие коробки
+    print pick right         # Подобрать коробку
+    print go left            # Шаг влево
+    print drop left          # Положить коробку
+    print get
+    set 2
+    print look right; end

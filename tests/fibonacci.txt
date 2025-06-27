@@ -1,0 +1,15 @@
+function main
+    INT n <= 10        # Число членов
+    INT i <= 2         # Счётчик
+    INT F <= 0      # Начальные значения
+    F[1] <= 1
+    function fib
+        if i != n do st
+        print F[n - 1]; end
+    function st
+        INT prev1 <= F[i - 1]
+        INT prev2 <= F[i - 2]
+        F[i] <= prev1 + prev2
+        i <= i + 1
+        do fib; end
+    do fib; end

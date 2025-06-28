@@ -21,6 +21,7 @@
 #include "AssignDefStmt.h"
 #include "eval.h"
 #include "globals.h"
+#define RANDOM_FUNC_NAME() ("func_" + std::to_string(__LINE__))
 
 int yylex();
 void yyerror(const char *s);
@@ -218,6 +219,14 @@ function_call_expr:
         $$ = new FunctionCallExpr($2);
         free($2);
     }
+	| DO FUNCTION function_body END {
+		std::string name = "func_" + std::to_string(std::rand() % 1000);
+		functionTable[name] = new FunctionDef{name , $3 };
+        printf("Function (anon) '%s' parsed.\n", name.c_str());
+		printf("Calling function '%s'\n", name.c_str());
+        $$ = new FunctionCallExpr(name);
+        $$ = new FunctionCallExpr(name);
+	}
 ;
 
 number:

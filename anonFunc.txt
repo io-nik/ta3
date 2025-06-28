@@ -1,0 +1,8 @@
+function choose
+    INT flag <= 1
+    if flag == 1 do function print 100; end
+end
+function main
+    INT result <= do choose
+    print result
+end

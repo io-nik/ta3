@@ -45,7 +45,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 29 "parser.y"
+#line 30 "parser.y"
 
 #include "Statement.h"
 #include "CellTypes.h"
@@ -74,40 +74,41 @@ enum class RobotCommandType;
     UMINUS = 264,                  /* UMINUS  */
     LENGTH = 265,                  /* LENGTH  */
     IF = 266,                      /* IF  */
-    FROM = 267,                    /* FROM  */
-    TO = 268,                      /* TO  */
-    WITH = 269,                    /* WITH  */
-    STEP = 270,                    /* STEP  */
-    DO = 271,                      /* DO  */
-    FUNCTION = 272,                /* FUNCTION  */
-    END = 273,                     /* END  */
-    GO = 274,                      /* GO  */
-    PICK = 275,                    /* PICK  */
-    DROP = 276,                    /* DROP  */
-    LOOK = 277,                    /* LOOK  */
-    SET = 278,                     /* SET  */
-    GET = 279,                     /* GET  */
-    IN = 280,                      /* IN  */
-    ALL = 281,                     /* ALL  */
-    SOME = 282,                    /* SOME  */
-    LESS = 283,                    /* LESS  */
-    ASSIGN = 284,                  /* ASSIGN  */
-    PLUS = 285,                    /* PLUS  */
-    MINUS = 286,                   /* MINUS  */
-    AND = 287,                     /* AND  */
-    OR = 288,                      /* OR  */
-    NOT = 289,                     /* NOT  */
-    EQUAL = 290,                   /* EQUAL  */
-    LPAREN = 291,                  /* LPAREN  */
-    RPAREN = 292,                  /* RPAREN  */
-    LQPAREN = 293,                 /* LQPAREN  */
-    RQPAREN = 294,                 /* RQPAREN  */
-    COMMA = 295,                   /* COMMA  */
-    SEMICOLON = 296,               /* SEMICOLON  */
-    EOL = 297,                     /* EOL  */
-    PRINT = 298,                   /* PRINT  */
-    MOD = 299,                     /* MOD  */
-    UNEQUAL = 300                  /* UNEQUAL  */
+    ELSE = 267,                    /* ELSE  */
+    FROM = 268,                    /* FROM  */
+    TO = 269,                      /* TO  */
+    WITH = 270,                    /* WITH  */
+    STEP = 271,                    /* STEP  */
+    DO = 272,                      /* DO  */
+    FUNCTION = 273,                /* FUNCTION  */
+    END = 274,                     /* END  */
+    GO = 275,                      /* GO  */
+    PICK = 276,                    /* PICK  */
+    DROP = 277,                    /* DROP  */
+    LOOK = 278,                    /* LOOK  */
+    SET = 279,                     /* SET  */
+    GET = 280,                     /* GET  */
+    IN = 281,                      /* IN  */
+    ALL = 282,                     /* ALL  */
+    SOME = 283,                    /* SOME  */
+    LESS = 284,                    /* LESS  */
+    ASSIGN = 285,                  /* ASSIGN  */
+    PLUS = 286,                    /* PLUS  */
+    MINUS = 287,                   /* MINUS  */
+    AND = 288,                     /* AND  */
+    OR = 289,                      /* OR  */
+    NOT = 290,                     /* NOT  */
+    EQUAL = 291,                   /* EQUAL  */
+    LPAREN = 292,                  /* LPAREN  */
+    RPAREN = 293,                  /* RPAREN  */
+    LQPAREN = 294,                 /* LQPAREN  */
+    RQPAREN = 295,                 /* RQPAREN  */
+    COMMA = 296,                   /* COMMA  */
+    SEMICOLON = 297,               /* SEMICOLON  */
+    EOL = 298,                     /* EOL  */
+    PRINT = 299,                   /* PRINT  */
+    MOD = 300,                     /* MOD  */
+    UNEQUAL = 301                  /* UNEQUAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -116,7 +117,7 @@ enum class RobotCommandType;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 40 "parser.y"
+#line 41 "parser.y"
 
     Statement* stmt;
     std::vector<Statement*>* stmtList;
@@ -129,7 +130,7 @@ union YYSTYPE
     ValueType typeVal;
     Expression* expr;
 
-#line 133 "parser.tab.hpp"
+#line 134 "parser.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

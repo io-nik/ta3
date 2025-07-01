@@ -13,9 +13,10 @@ struct IfStmt : Statement {  // меняли стмт на экспр
     Expression* condition;
     //FunctionCallStmt* call;
     Expression* call;
+	Expression* elsecall;
 
-    IfStmt(Expression* condition, Expression* call)
-        : condition(condition), call(call) {}
+    IfStmt(Expression* condition, Expression* call, Expression* elsecall = nullptr)
+        : condition(condition), call(call), elsecall(elsecall) {}
 
     Value* execute(Environment* env) override {
         Value* cond = condition->evaluate(env)->castTo(ValueType::BOOL);
@@ -32,7 +33,9 @@ struct IfStmt : Statement {  // меняли стмт на экспр
 
         if (shouldExecute)
             return call->evaluate(env);
-        return nullptr;
+		else if(elsecall)
+			return elsecall->evaluate(env);
+        return new Value(ValueType::BOOL, 0);
     }
 
     ~IfStmt() override {

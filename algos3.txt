@@ -1,0 +1,71 @@
+function main
+    INT dir <= 0  # 0 - up, 1 - right, 2 - down, 3 - left
+    CELL current_view <= UNDEF
+    CELL right_view <= UNDEF
+    function right_dir
+        INT tmp <= dir + 1
+        dir <= tmp % 4
+    end
+    function left_dir
+        INT tmp <= dir + 3
+        dir <= tmp % 4
+    end
+    function check_cell
+        if current_view[i] == EXIT do stop
+        i <= i + 1
+    end
+    function is_exit
+        do look_current
+        INT i <= 0
+        INT max_i <= get
+        from i to max_i do check_cell
+    end
+    function stop
+		do move_forward
+        print 10000000
+    end
+    function look_current
+        if dir == 0 do function current_view <= look up; end
+        if dir == 1 do function current_view <= look right; end
+        if dir == 2 do function current_view <= look down; end
+        if dir == 3 do function current_view <= look left; end
+    end
+    function look_in_right
+        if dir == 0 do function right_view <= look right; end
+        if dir == 1 do function right_view <= look down; end
+        if dir == 2 do function right_view <= look left; end
+        if dir == 3 do function right_view <= look up; end
+    end
+    function move_forward
+        if dir == 0 do function go up; end
+        if dir == 1 do function go right; end
+        if dir == 2 do function go down; end
+        if dir == 3 do function go left; end
+    end
+    function turn_right_and_move
+        do right_dir
+        do move_forward
+    end
+    function try_right_turn
+        do look_in_right
+        if right_view[0] != WALL do turn_right_and_move
+    end
+    function try_forward
+        do look_current
+        if current_view[0] != WALL do move_forward
+    end
+    function turn_left
+        do left_dir
+    end
+	function inner
+		do look_current
+		if current_view[0] == EMPTY do move_forward else do turn_left
+	end
+    function st
+		do look_current
+		if current_view[0] == EXIT do stop
+		do look_in_right
+		if right_view[0] == EMPTY do turn_right_and_move else do inner
+    end
+    from 0 to 10000 do st
+end

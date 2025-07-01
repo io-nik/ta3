@@ -61,7 +61,7 @@ enum class RobotCommandType;
 
 // терминалы
 %token UMINUS LENGTH
-%token IF FROM TO WITH STEP DO FUNCTION END
+%token IF ELSE FROM TO WITH STEP DO FUNCTION END
 %token GO PICK DROP LOOK SET GET
 %token IN ALL SOME LESS
 %token ASSIGN  // <=
@@ -72,7 +72,7 @@ enum class RobotCommandType;
 %token MOD
 
 // нетерминальные символы и их типы
-%type <expr> expression logical_expr number
+%type <expr> expression logical_expr number cell
 //%type <stmt> robot_command
 %type <stmt> control
 %type <stmtList> function_body
@@ -193,6 +193,7 @@ array_assignment:
 
 expression:
     number
+	| cell
     | logical_expr
     | function_call_expr { $$ = $1; }
     | ID LQPAREN expression RQPAREN { $$ = new ArrayAccessExpr($1, $3); free($1); }
@@ -233,6 +234,10 @@ number:
     INT { $$ = new ConstantExpr(new Value(ValueType::INT, $1)); }
 ;
 
+cell:
+    CELL { $$ = new ConstantExpr(new Value(ValueType::CELL, $1)); }
+;
+
 logical_expr:
     BOOL           { $$ = new ConstantExpr(new Value(ValueType::BOOL, $1)); }
     | expression UNEQUAL expression { $$ = new BinaryExpr("!=", $1, $3); }
@@ -243,7 +248,8 @@ logical_expr:
 ;
 
 control:
-    IF expression function_call_expr { $$ = new IfStmt($2, dynamic_cast<FunctionCallExpr*>($3)); printf("If called\n"); }
+  IF expression function_call_expr ELSE function_call_expr { $$ = new IfStmt($2, dynamic_cast<FunctionCallExpr*>($3), dynamic_cast<FunctionCallExpr*>($5)); printf("If-else called\n"); }
+  | IF expression function_call_expr { $$ = new IfStmt($2, dynamic_cast<FunctionCallExpr*>($3)); printf("If called\n"); }
   | FROM expression TO expression opt_step function_call_expr { $$ = new LoopStmt($2, $4, $5, dynamic_cast<FunctionCallExpr*>($6)); printf("From called\n"); }
 ;
 

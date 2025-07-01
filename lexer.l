@@ -18,6 +18,7 @@ INT       {SIGN}{DIGIT}+
 %%
 
 "if"                    { return IF; }
+"else"                  { return ELSE; }
 "from"                  { return FROM; }
 "to"                    { return TO; }
 "with"                  { return WITH; }

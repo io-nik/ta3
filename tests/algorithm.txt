@@ -63,7 +63,9 @@ function main
 	end
     function st
 		do look_current
-		if current_view[0] == EXIT do stop
+		if current_view[0] == EXIT do function do move_forward; do stop; end
+		do look_in_right
+		if right_view[0] == EXIT do function do right_dir; do move_forward; end
 		do look_in_right
 		if right_view[0] == EMPTY do turn_right_and_move else do inner
     end

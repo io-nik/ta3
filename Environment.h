@@ -23,7 +23,7 @@ public:
 
     Value* get(const std::string& name, int index = 0) const; // Возвращает копию значения переменной по индексу
 
-    Value* get_full(const std::string& name) const; // Возвращает копию значения всей переменной
+    Value* getFull(const std::string& name) const; // Возвращает копию значения всей переменной
 
     void set(const std::string& name, int index, Value* val); // Меняет существующую переменную либо создаёт новую в текущей области
 

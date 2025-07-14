@@ -29,7 +29,7 @@ add_executable(
         AssignStmt.h
         IfStmt.h
         LoopStmt.h
-        FunctionCallStmt.h
+        #FunctionCallStmt.h
         interpreter.h
         Robot.h
         #RobotCommandStmt.h

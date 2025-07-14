@@ -19,8 +19,6 @@ struct AssignDefStmt : public Statement {
 
     Value* execute(Environment* env) override {
         Value* val = expr->evaluate(env)->castTo(type);
-        /*if (val->type != type)
-            throw std::runtime_error("Type mismatch in variable definition: " + name);*/
         env->define(name, val);  // именно define!
         return val;
     }

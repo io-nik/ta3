@@ -43,14 +43,14 @@ Value *Environment::get(const std::string &name, int index) const {
 }
 
 
-Value* Environment::get_full(const std::string& name) const {
+Value* Environment::getFull(const std::string& name) const {
     auto it = table.find(name);
     if(it != table.end()) {
         Value* v = it->second;
         return new Value(v->type, v->data);
     }
     if(parent)
-        return parent->get_full(name);
+        return parent->getFull(name);
     throw std::runtime_error("Full variable not found '" + name + "'");
 }
 
@@ -68,12 +68,12 @@ void Environment::set(const std::string& name, int index, Value* val) {
         return;
     }
 
-    if(parent && parent->has(name)) { // 2. Если есть в parent → рекурсивно туда
+    if(parent && parent->has(name)) { // 2. Если есть в parent => рекурсивно туда
         parent->set(name, index, val);
         return;
     }
 
-    Value* newVar = new Value(val->type); // 3. Иначе — создаём новую переменную в текущей области
+    Value* newVar = new Value(val->type); // 3. Иначе - создаём новую переменную в текущей области
     newVar->data.resize(index + 1, 0);
     newVar->data[index] = val->data[0];
     table[name] = newVar;

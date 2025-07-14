@@ -13,6 +13,7 @@
 #include "FunctionDef.h"
 #include "interpreter.h"
 #include <map>
+#include <fstream>
 extern std::map<std::string, FunctionDef*> functionTable;
 
 struct Expression {
@@ -31,7 +32,7 @@ struct ConstantExpr : public Expression {
     }
 };
 
-// VariableExpr: обращение к переменной по имени и индексу
+// VariableExpr: обращение к переменной по имени
 struct VariableExpr : public Expression {
     std::string name;
 
@@ -92,6 +93,7 @@ struct UnaryExpr : public Expression {
     }
 };
 
+// ArrayAccessExpr: обращение к переменной по имени и индексу
 struct ArrayAccessExpr : public Expression {
     std::string name;
     Expression* index;
@@ -152,7 +154,9 @@ struct RobotCommandExpr : public Expression {
                 return new Value(ValueType::INT, radius);
             }
         }
-        robot->print_field();
+        std::ofstream out("../tests/RobotLog.txt", std::ios::app);
+        robot->print_field(out);
+        out.close();
         return result;
     }
 };
@@ -168,23 +172,20 @@ struct FunctionCallExpr : public Expression {
         if(it == functionTable.end())
             throw std::runtime_error("Function not found (in expression) " + name);
 
-        //Environment* localEnv = new Environment(env); // я уже создаю область видимости в eval_function()
         Value* result = eval_function(it->second, env); // localEnv
-        //delete localEnv;
         return result ? result : new Value(ValueType::INT, 0);
 
     }
 };
 
-
-// VariableExpr: обращение к переменной по имени
+// FullVariableExpr: обращение к полной переменной по имени
 struct FullVariableExpr : public Expression {
     std::string name;
 
     explicit FullVariableExpr(std::string name) : name(std::move(name)) {}
 
     Value* evaluate(Environment* env) override {
-        return env->get_full(name);
+        return env->getFull(name);
     }
 };
 #endif // TA3_EXPRESSION_H

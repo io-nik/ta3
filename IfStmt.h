@@ -6,12 +6,10 @@
 #define TA3_IFSTMT_H
 
 #include "Statement.h"
-#include "FunctionCallStmt.h"
 #include "Expression.h"
 
 struct IfStmt : Statement {  // меняли стмт на экспр
     Expression* condition;
-    //FunctionCallStmt* call;
     Expression* call;
 	Expression* elsecall;
 
@@ -41,6 +39,7 @@ struct IfStmt : Statement {  // меняли стмт на экспр
     ~IfStmt() override {
         delete condition;
         delete call;
+        delete elsecall;
     }
 };
 

@@ -3,6 +3,7 @@
 #include "CellTypes.h"
 #include "Value.h"
 #include <string>
+#include <stdlib.h>
 %}
 
 %option noyywrap
@@ -77,8 +78,8 @@ INT       {SIGN}{DIGIT}+
 "\n"                    { return EOL; }
 ";"                     { return SEMICOLON; }
 
-{FLOAT}                 { yylval.iVal = atoi(yytext); return INT; }
-{SCI}                   { yylval.iVal = atoi(yytext); return INT; }
+{FLOAT}                 { yylval.iVal = (int)atof(yytext); return INT; }
+{SCI}                   { yylval.iVal = (int)atof(yytext); return INT; }
 {INT}                   { yylval.iVal = atoi(yytext); return INT; }
 
 {ID}                    { yylval.sVal = strdup(yytext); return ID; }

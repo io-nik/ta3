@@ -75,8 +75,8 @@ Value *Value::castTo(ValueType target) const {
             }
             break;
     }
-    throw std::runtime_error("Invalid cast from " + cast(static_cast<int>(type)) + " to " + cast(
-            static_cast<int>(target)));
+    throw std::runtime_error("Invalid cast from " + cast(static_cast<int>(type)) + " to " +
+            cast(static_cast<int>(target)));
 }
 
 

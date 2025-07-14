@@ -11,7 +11,6 @@
 
 struct AssignArrayStmt : public Statement {
     std::string name;
-    //int index;
     Expression* index;
     Expression* expr;
 

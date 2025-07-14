@@ -40,6 +40,9 @@ int main(int argc, char** argv) {
             return 2;
         }
 
+        std::ofstream out("../tests/RobotLog.txt"); // rewriting file
+        out.close();
+
         std::cout << "Running main()...\n";
         eval_function(it->second, env);
 

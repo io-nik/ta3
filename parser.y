@@ -12,7 +12,7 @@
 #include "FunctionDef.h"
 #include "AssignStmt.h"
 #include "ExprStmt.h"
-#include "FunctionCallStmt.h"
+//#include "FunctionCallStmt.h"
 #include "IfStmt.h"
 #include "LoopStmt.h"
 //#include "RobotCommandStmt.h"
@@ -73,23 +73,25 @@ enum class RobotCommandType;
 
 // нетерминальные символы и их типы
 %type <expr> expression logical_expr number cell
-//%type <stmt> robot_command
 %type <stmt> control
 %type <stmtList> function_body
 %type <stmtList> statement_list
 %type <stmt> statement
 %type <stmt> assignment
-//%type <stmt> function_call_stmt
 %type <expr> opt_step robot_command_expr function_call_expr
-//%type <sVal> function_call_core
 %type <stmt> array_assignment
 
 
-%right UMINUS NOT LENGTH SET GET// Унарный минус
-%left PLUS MINUS MOD// лево- правоприоритетные операции
-%left AND OR EQUAL UNEQUAL
-%left IN LESS
-%left ALL SOME
+%right ASSIGN             // Присваивание
+%left OR                  // ИЛИ
+%left AND                 // И
+%nonassoc IN LESS         // Операторы для массивов
+%nonassoc EQUAL UNEQUAL   // Операторы равенства
+%nonassoc ALL SOME        // Операторы для массивов
+%left PLUS MINUS
+%left MOD                 // Оператор взятия остатка от деления
+%right UMINUS NOT LENGTH  // Унарный минус, НЕ, длина
+%right SET GET            // Управление областью видимости робота
 
 %%
 
@@ -144,7 +146,6 @@ statement_list:
 statement:
       assignment         { $$ = $1; }
     | control            { $$ = $1; }
-    //| robot_command_expr      { $$ = $1; }
     | expression { $$ = new ExprStmt($1); } // может использоваться как возвращаемое значение
     | PRINT expression { $$ = new PrintStmt($2); }
 ;
@@ -171,14 +172,6 @@ assignment:
         //print_value($4->evaluate(env));
     }
     | array_assignment
-	/*| ID LQPAREN INT RQPAREN ASSIGN expression
-	{
-	    $$ = new AssignArrayStmt($1, $3, $6);
-	    //env->set($1, $3->evaluate(env)->data[0], $6->evaluate(env)); // Только для парсинга — временная заглушка
-        printf("Assign_arr %s[%d]\n", $1, $3);
-        //print_value($6->evaluate(env));          // test
-        free($1);
-    }*/
 ;
 
 array_assignment:
@@ -226,7 +219,6 @@ function_call_expr:
         printf("Function (anon) '%s' parsed.\n", name.c_str());
 		printf("Calling function '%s'\n", name.c_str());
         $$ = new FunctionCallExpr(name);
-        $$ = new FunctionCallExpr(name);
 	}
 ;
 
@@ -257,20 +249,6 @@ opt_step:
     /* empty */         { $$ = new ConstantExpr(new Value(ValueType::INT, 1)); } // по умолчанию step = 1
     | WITH STEP expression { $$ = $3; }
 ;
-
-/*function_call_core:
-    DO ID {
-        $$ = $2;
-    }
-;*/
-
-/*function_call_stmt:
-    function_call_core {
-        printf("Calling function (stmt) '%s'\n", $1);
-        $$ = new FunctionCallStmt($1);
-        free($1);
-    }
-;*/
 
 robot_command_expr:
       GO DIRECTION       { $$ = new RobotCommandExpr(RobotCommandType::GO, $2, robot); }

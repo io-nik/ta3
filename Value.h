@@ -34,6 +34,8 @@ struct Value {
     }
 };
 
+std::string prType(ValueType t);
+
 std::string cast(int i);
 
 void print_value(Value* v);

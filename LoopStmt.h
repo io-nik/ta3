@@ -6,14 +6,12 @@
 #define TA3_LOOPSTMT_H
 
 #include "Statement.h"
-#include "FunctionCallStmt.h"
 #include "Expression.h"
 
 struct LoopStmt : public Statement {
     Expression* from;
     Expression* to;
     Expression* step;
-    //FunctionCallStmt* body;
     Expression* body;
 
     LoopStmt(Expression* from, Expression* to, Expression* step, Expression* body)
@@ -22,7 +20,7 @@ struct LoopStmt : public Statement {
     Value* execute(Environment* env) override {
         Value *v1 = from->evaluate(env)->castTo(ValueType::INT);
         Value *v2 = to->evaluate(env)->castTo(ValueType::INT);
-        Value* v3 = step ? step->evaluate(env)->castTo(ValueType::INT)
+        Value *v3 = step ? step->evaluate(env)->castTo(ValueType::INT)
                 : new Value(ValueType::INT, 1);
 
         int begin = v1->data[0];

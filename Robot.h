@@ -46,16 +46,16 @@ struct Field {
         }
     }
 
-    void print(int x, int y, bool is) {
+    void print(int x, int y, bool is, std::ostream& out = std::cout) {
         for (int i = 0; i < grid.size(); ++i) {
             for (int j = 0; j < grid[i].size(); ++j) {
                 if(i == y and j == x)
-                    if(is) std::cout << 'R';
-                    else std::cout << 'r';
+                    if(is) out << 'R';
+                    else out << 'r';
                 else
-                    std::cout << cast(grid[i][j]);
+                    out << cast(grid[i][j]);
             }
-            std::cout << std::endl;
+            out << std::endl;
         }
     }
 
@@ -198,10 +198,12 @@ struct Robot {
     }
 
 
-    void print_field() const {
-        std::cout << "Robot at (x = " << x << ", y = " << y << "), with box: " << (hasBox ? "yes" : "no") << std::endl;
-        field->print(x, y, hasBox);
+    void print_field(std::ostream &out = std::cout) const {
+        out << "Robot at (x = " << x << ", y = " << y << "), with box: " << (hasBox ? "yes" : "no") << std::endl;
+        field->print(x, y, hasBox, out);
     }
+
+    ~Robot() { delete field; }
 };
 
 

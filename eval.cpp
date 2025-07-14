@@ -3,12 +3,13 @@
 //
 
 #include <algorithm>
+#include <string>
 #include "eval.h"
 #include "Value.h"
 
 Value* eval_mod(const Value* a, const Value* b) {
-    if (a->type != ValueType::INT || b->type != ValueType::INT)
-        throw std::runtime_error("Mismatched types in '%' operation");
+    /*if (a->type != ValueType::INT || b->type != ValueType::INT)
+        throw std::runtime_error("Mismatched types in '%' operation");*/
 
     a = a->castTo(ValueType::INT);
     b = b->castTo(ValueType::INT);
@@ -20,7 +21,8 @@ Value* eval_mod(const Value* a, const Value* b) {
     for (size_t i = 0; i < maxLen; ++i) {
         int av = (i < a->size()) ? a->data[i] : 0;
         int bv = (i < b->size()) ? b->data[i] : 1; // избегаем деления на 0
-        if (bv == 0) throw std::runtime_error("Division by zero in '%' operation");
+        if (bv == 0)
+            throw std::runtime_error("Division by zero in '%' operation");
         result->data[i] = av % bv;
     }
 
@@ -87,7 +89,7 @@ Value* eval_length(const Value* val) {
 
 Value* eval_unequal(const Value* a, const Value* b) { // приведения типов?
     if (a->type != b->type)
-        throw std::runtime_error("Type mismatch in '!=' operator: " + cast((int)a->type) + " vs " + cast((int)b->type));
+        throw std::runtime_error("Type mismatch in '!=' operator: " + prType(a->type) + " vs " + prType(b->type));
     auto result = new Value(ValueType::BOOL);
 
     if(a->size() != b->size()) {
@@ -104,7 +106,7 @@ Value* eval_unequal(const Value* a, const Value* b) { // приведения т
 
 Value* eval_equal(const Value* a, const Value* b) { // приведения типов?
     if (a->type != b->type)
-        throw std::runtime_error("Type mismatch in '==' operator: " + cast((int)a->type) + " vs " + cast((int)b->type));
+        throw std::runtime_error("Type mismatch in '==' operator: " + prType(a->type) + " vs " + prType(b->type));//cast((int)a->type) + " vs " + cast((int)b->type));
     auto result = new Value(ValueType::BOOL);
 
     if(a->size() != b->size()) {
@@ -168,7 +170,7 @@ Value* eval_neg(const Value* a) {
 
 Value* eval_in(const Value *x, const Value *arr) {
     if(x->type != arr->type)
-        throw std::runtime_error("Type mismatch in 'in' operator: " + cast((int)x->type) + " vs " + cast((int)arr->type));
+        throw std::runtime_error("Type mismatch in 'in' operator: " + prType(x->type) + " vs " + prType(arr->type));
 
 
     auto result = new Value(ValueType::BOOL);
@@ -190,7 +192,7 @@ Value* eval_in(const Value *x, const Value *arr) {
 
 Value* eval_all_in(const Value* a, const Value* b) {
     if (a->type != b->type)
-        throw std::runtime_error("Type mismatch in 'all in' operator: " + cast((int)a->type) + " vs " + cast((int)b->type));
+        throw std::runtime_error("Type mismatch in 'all in' operator: " + prType(a->type) + " vs " + prType(b->type));
 
     auto result = new Value(ValueType::BOOL);
     bool allFound = true;
@@ -216,7 +218,7 @@ Value* eval_all_in(const Value* a, const Value* b) {
 
 Value* eval_some_in(const Value* a, const Value* b) {
     if (a->type != b->type)
-        throw std::runtime_error("Type mismatch in 'some in' operator: " + cast((int)a->type) + " vs " + cast((int)b->type));
+        throw std::runtime_error("Type mismatch in 'some in' operator: " + prType(a->type) + " vs " + prType(b->type));
 
     auto result = new Value(ValueType::BOOL);
     bool found = false;
@@ -238,11 +240,11 @@ Value* eval_some_in(const Value* a, const Value* b) {
 
 Value* eval_less(const Value* x, const Value* arr) {
     if (x->type != arr->type)
-        throw std::runtime_error("Type mismatch in 'less' operator: " + cast((int)x->type) + " vs " + cast((int)arr->type));
+        throw std::runtime_error("Type mismatch in 'less' operator: " + prType(x->type) + " vs " + prType(arr->type));
 
     auto result = new Value(ValueType::BOOL);
 
-    int val = x->data[0];  // Одно значение
+    int val = x->data[0]; // Одно значение
     bool is_less = false;
 
     for (int i : arr->data) {
@@ -259,7 +261,7 @@ Value* eval_less(const Value* x, const Value* arr) {
 
 Value* eval_all_less(const Value* a, const Value* b) {
     if (a->type != b->type)
-        throw std::runtime_error("Type mismatch in 'all less' operator: " + cast((int)a->type) + " vs " + cast((int)b->type));
+        throw std::runtime_error("Type mismatch in 'all less' operator: " + prType(a->type) + " vs " + prType(b->type));
 
     auto result = new Value(ValueType::BOOL);
     bool all_less = true;
@@ -281,7 +283,7 @@ Value* eval_all_less(const Value* a, const Value* b) {
 
 Value* eval_some_less(const Value* a, const Value* b) {
     if (a->type != b->type)
-        throw std::runtime_error("Type mismatch in 'some less' operator: " + cast((int)a->type) + " vs " + cast((int)b->type));
+        throw std::runtime_error("Type mismatch in 'some less' operator: " + prType(a->type) + " vs " + prType(b->type));
 
     auto result = new Value(ValueType::BOOL);
     bool some_less = false;
@@ -299,5 +301,3 @@ Value* eval_some_less(const Value* a, const Value* b) {
     result->data.push_back(some_less ? 1 : 0);
     return result;
 }
-
-
